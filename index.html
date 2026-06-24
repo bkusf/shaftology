@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHAFTOLOGY — Aftermarket Driver Shaft Lab</title>
+  <script>
+    /* set theme before paint to avoid a flash */
+    (function () {
+      try {
+        var t = localStorage.getItem('shaftology-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-head">
+    <div class="head-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="28" height="28"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="16" cy="16" r="13"/><path d="M16 3 L16 29 M6 9 L26 23" stroke-width="1.2" opacity="0.5"/></g></svg>
+        </span>
+        <div class="brand-text">
+          <h1>Shaftology</h1>
+          <p class="brand-sub">Aftermarket Driver Shaft Lab</p>
+        </div>
+      </div>
+      <div class="head-meta">
+        <span class="kpi"><b id="kpi-shafts">0</b><i>shafts</i></span>
+        <span class="kpi"><b id="kpi-mfrs">0</b><i>makers</i></span>
+        <span class="head-tag">profile&nbsp;intelligence&nbsp;engine</span>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light / dark mode" title="Toggle light / dark mode">
+          <svg class="i-moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8l1.8-1.8M18 6l1.8-1.8"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== FITTING BENCH ===================== -->
+    <section class="bench" id="bench">
+      <div class="bench-head">
+        <span class="eyebrow">01 — The Fitting Bench</span>
+        <h2>Dial in your <em>current gamer</em></h2>
+        <p class="lede">Pick what's in your driver right now. We profile it, then comb the database for shafts that match its DNA — so you can shop alternatives with confidence instead of guesswork.</p>
+      </div>
+
+      <div class="console">
+        <div class="field" data-step="1">
+          <label for="sel-mfr">Manufacturer</label>
+          <div class="select-wrap"><select id="sel-mfr"><option value="">Select a maker…</option></select></div>
+        </div>
+        <div class="field" data-step="2">
+          <label for="sel-model">Model</label>
+          <div class="select-wrap"><select id="sel-model" disabled><option value="">—</option></select></div>
+        </div>
+        <div class="field field-sm" data-step="3">
+          <label for="sel-weight">Weight</label>
+          <div class="select-wrap"><select id="sel-weight" disabled><option value="">—</option></select></div>
+        </div>
+        <div class="field field-sm" data-step="4">
+          <label for="sel-flex">Flex</label>
+          <div class="select-wrap"><select id="sel-flex" disabled><option value="">—</option></select></div>
+        </div>
+        <button class="apply-btn" id="apply-btn" disabled>
+          <span>Analyze</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== GOAL FINDER ===================== -->
+    <section class="finder" id="finder">
+      <div class="finder-head">
+        <span class="eyebrow">02 — Or, Start With A Goal</span>
+        <h2>No shaft in mind? <em>Dial a flight window</em></h2>
+        <p class="lede">Tell us the ball flight you're chasing and the build you like the feel of. We rank the whole database by how closely each shaft delivers it.</p>
+      </div>
+
+      <div class="goal-console">
+        <div class="goal-group" data-goal="launch">
+          <span class="goal-label">Launch</span>
+          <div class="seg">
+            <button data-val="low">Low</button><button data-val="mid" class="on">Mid</button><button data-val="high">High</button>
+          </div>
+        </div>
+        <div class="goal-group" data-goal="spin">
+          <span class="goal-label">Spin</span>
+          <div class="seg">
+            <button data-val="low">Low</button><button data-val="mid" class="on">Mid</button><button data-val="high">High</button>
+          </div>
+        </div>
+        <div class="goal-group" data-goal="weight">
+          <span class="goal-label">Weight</span>
+          <div class="seg">
+            <button data-val="light">Light</button><button data-val="mid" class="on">Mid</button><button data-val="heavy">Heavy</button><button data-val="any">Any</button>
+          </div>
+        </div>
+        <div class="goal-group" data-goal="feel">
+          <span class="goal-label">Feel</span>
+          <div class="seg">
+            <button data-val="smooth">Smooth</button><button data-val="any" class="on">Any</button><button data-val="stout">Stout</button>
+          </div>
+        </div>
+        <button class="apply-btn finder-btn" id="finder-btn">
+          <span>Find shafts</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="reco-grid" id="finder-grid"></div>
+    </section>
+
+    <!-- ===================== RESULT ===================== -->
+    <section class="result" id="result" hidden>
+      <!-- selected shaft profile -->
+      <div class="profile-card" id="profile-card">
+        <div class="profile-main">
+          <div class="profile-id">
+            <div class="p-toprow">
+              <span class="mfr-chip" id="p-mfr">—</span>
+              <button class="photo-chip" id="p-photo" type="button">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg>
+                <span id="p-photo-label">Hover for photo</span>
+              </button>
+            </div>
+            <h3 id="p-model">—</h3>
+            <p class="p-build" id="p-build">—</p>
+            <div class="verified-row" id="p-specs"></div>
+            <p class="p-blurb" id="p-blurb">—</p>
+            <div class="tag-row" id="p-tags"></div>
+          </div>
+          <div class="profile-radar">
+            <svg id="radar" viewBox="-40 0 400 320" aria-label="Shaft profile radar chart"></svg>
+            <p class="radar-cap"><span class="dot dot-you"></span>Your shaft<span class="dot dot-alt"></span><span id="radar-alt-name">hover an alternative</span></p>
+          </div>
+        </div>
+
+        <div class="spec-strip" id="spec-strip"></div>
+
+        <div class="bend">
+          <div class="bend-head">
+            <span class="micro">Bend Profile — handle → tip</span>
+            <span class="micro dim" id="bend-summary"></span>
+          </div>
+          <svg id="bend-svg" viewBox="0 0 600 120" preserveAspectRatio="none" aria-label="Bend profile"></svg>
+          <div class="bend-axis"><span>Butt</span><span>Mid</span><span>Tip</span></div>
+        </div>
+      </div>
+
+      <!-- recommendations -->
+      <div class="recos" id="recos">
+        <div class="recos-head">
+          <span class="eyebrow">03 — Comparable Shafts</span>
+          <h2>Closest matches by <em>profile DNA</em><button class="info-btn" id="dna-info" type="button" aria-label="How profile-DNA matching works">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.05" fill="currentColor" stroke="none"/></svg>
+            <span class="info-tip">Ranked by a weighted distance across 8 shaft traits. Click for the full methodology.</span>
+          </button></h2>
+          <div class="reco-controls">
+            <label class="switch">
+              <input type="checkbox" id="cross-only" checked />
+              <span class="track"><span class="thumb"></span></span>
+              <span class="switch-label">Other makers only</span>
+            </label>
+          </div>
+        </div>
+        <div class="reco-grid" id="reco-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===================== DATABASE ===================== -->
+    <section class="library" id="library">
+      <div class="lib-head">
+        <span class="eyebrow">04 — The Vault</span>
+        <h2>Browse the <em>full database</em></h2>
+        <div class="lib-filters" id="lib-filters"></div>
+      </div>
+      <div class="lib-grid" id="lib-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <p>Shaftology — built for shaftoids. Lineups current as of the 2026 season (researched from manufacturer &amp; retailer sources, Jun 2026). Profiles are relative fitting characteristics for comparison, not OEM lab numbers. Always get fit by a pro before buying.</p>
+  </footer>
+
+  <!-- floating product-photo popover (shown on hover) -->
+  <div class="img-pop" id="img-pop" aria-hidden="true"></div>
+
+  <!-- methodology modal -->
+  <div class="modal-overlay" id="dna-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dna-modal-title">
+      <button class="modal-close" id="dna-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="eyebrow">Methodology</span>
+      <h3 id="dna-modal-title" class="modal-title">How <em>“profile DNA”</em> matching works</h3>
+      <p class="modal-lede">Recommendations are a transparent, deterministic nearest-neighbour search — no black-box ML. Here's the exact pipeline.</p>
+
+      <div class="modal-body">
+        <section class="m-step">
+          <span class="m-num">1</span>
+          <div>
+            <h4>Every shaft becomes a fingerprint</h4>
+            <p>Each shaft is reduced to <b>8 characteristics</b> on a 1–5 scale: launch, spin, tip stiffness, mid stiffness, butt stiffness, balance (counterbalance), feel (smoothness) and stability. That ordered list of 8 numbers <em>is</em> the “DNA” — a point in 8-dimensional fitting space.</p>
+          </div>
+        </section>
+        <section class="m-step">
+          <span class="m-num">2</span>
+          <div>
+            <h4>Distance = how far two fingerprints sit apart</h4>
+            <p>A <b>weighted Euclidean distance</b> — squared per-axis differences, scaled by importance, summed, then square-rooted:</p>
+            <pre class="m-formula">d = √( Σ  wᵢ · (aᵢ − bᵢ)² )</pre>
+            <table class="m-table">
+              <tr><th>Weight</th><th>Axes</th><th>Why it's weighted that way</th></tr>
+              <tr><td>1.0</td><td>launch · spin · tip · stability</td><td>The outcomes plus the main dispersion/feel drivers a fitter chases first</td></tr>
+              <tr><td>0.8</td><td>balance</td><td>Counterbalancing changes how the whole shaft loads</td></tr>
+              <tr><td>0.7</td><td>feel</td><td>Matters, but subjective</td></tr>
+              <tr><td>0.6</td><td>mid · butt</td><td>Finer structural detail, secondary to the tip</td></tr>
+            </table>
+          </div>
+        </section>
+        <section class="m-step">
+          <span class="m-num">3</span>
+          <div>
+            <h4>Two real-world penalties</h4>
+            <p>A perfect profile in the wrong build isn't a real alternative, so distance grows for weight and flex gaps:</p>
+            <pre class="m-formula">d += (|Δgrams| ÷ 10) × 0.55     ← weight gap
+d += 0.4  if your flex isn't offered</pre>
+          </div>
+        </section>
+        <section class="m-step">
+          <span class="m-num">4</span>
+          <div>
+            <h4>Distance → a 0–100% score</h4>
+            <pre class="m-formula">match% = clamp( 100 · e^(−d ÷ 3),  35,  99 )</pre>
+            <p>Exponential decay: an identical shaft scores ~100%, and the score falls off smoothly with diminishing returns rather than linearly. Capped at 99 (nothing's a literal clone), floored at 35.</p>
+          </div>
+        </section>
+        <section class="m-step">
+          <span class="m-num">5</span>
+          <div>
+            <h4>Rank &amp; surface the trade-offs</h4>
+            <p>Score every other shaft, sort descending, take the top 6. The <b>“Other makers only”</b> toggle keeps true alternatives. Each card's <b>delta pills</b> (▲ softer tip, ▼ lower spin) are literally the axes with the largest gaps — so you see <em>what</em> you'd be trading, not just the number.</p>
+          </div>
+        </section>
+        <section class="m-note">
+          <h4>The honest caveat</h4>
+          <p>The math is exact and reproducible — but the 1–5 inputs are <b>curated relative estimates</b> for most shafts. Only models with a <b>✓ Verified specs</b> badge use published manufacturer numbers. And it matches <b>shaft-to-shaft</b>, not player-to-shaft: it knows nothing about your swing speed, tempo or attack angle. Use it to build a shortlist, then get fit by a pro.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
