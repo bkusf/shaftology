@@ -95,6 +95,15 @@
     const pb = card.querySelector('.card-photo');
     if (pb) bindPhoto(pb, id);
   }
+  // spec-sheet icon for a card → opens the full spec modal
+  function specBtn(s) {
+    return `<button class="card-spec" type="button" data-spec="${s.id}" aria-label="Full spec sheet for ${s.model}" title="Full spec sheet">` +
+           `<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></button>`;
+  }
+  function bindCardSpec(card) {
+    const b = card.querySelector('.card-spec');
+    if (b) b.addEventListener('click', e => { e.stopPropagation(); openSpecSheet(b.dataset.spec); });
+  }
 
   /* ====================================================================
      SIMILARITY ENGINE
@@ -382,7 +391,7 @@
       <article class="reco-card" data-id="${s.id}" style="animation-delay:${idx * 55}ms">
         <div class="reco-top">
           <div>
-            <div class="reco-mfr-row"><span class="reco-mfr">${s.mfr}</span>${photoBtn(s)}</div>
+            <div class="reco-mfr-row"><span class="reco-mfr">${s.mfr}</span>${photoBtn(s)}${specBtn(s)}</div>
             <div class="reco-name">${s.model}</div>
           </div>
           <div class="match-badge"><b>${score}<span style="font-size:0.7rem">%</span></b><i>match</i></div>
@@ -411,7 +420,8 @@
         $('#radar-alt-name').textContent = 'hover an alternative';
       });
       card.addEventListener('click', () => loadShaft(s));
-      bindCardPhoto(card, s.id);   // photo shows only when hovering the photo icon
+      bindCardPhoto(card, s.id);
+      bindCardSpec(card);   // photo shows only when hovering the photo icon
     });
   }
 
@@ -475,7 +485,7 @@
       return `
       <article class="reco-card" data-id="${s.id}" style="animation-delay:${idx * 55}ms">
         <div class="reco-top">
-          <div><div class="reco-mfr-row"><span class="reco-mfr">${s.mfr}</span>${photoBtn(s)}</div><div class="reco-name">${s.model}</div></div>
+          <div><div class="reco-mfr-row"><span class="reco-mfr">${s.mfr}</span>${photoBtn(s)}${specBtn(s)}</div><div class="reco-name">${s.model}</div></div>
           <div class="match-badge"><b>${score}<span style="font-size:0.7rem">%</span></b><i>fit</i></div>
         </div>
         <div class="reco-meta">${w}g · ~${s.torque.toFixed(1)}° · ${s.flexes.join('/')} · $${s.price}</div>
@@ -495,6 +505,7 @@
     $$('#finder-grid .reco-card').forEach(card => {
       const s = SHAFTS.find(x => x.id === card.dataset.id);
       bindCardPhoto(card, s.id);
+      bindCardSpec(card);
       card.addEventListener('click', () => loadShaft(s));
     });
   }
@@ -542,6 +553,84 @@
   })();
 
   /* ====================================================================
+     SPEC-SHEET MODAL (full spec for a model)
+     ==================================================================== */
+  const SS_AXES = [
+    { k:'launch', label:'Launch' }, { k:'spin', label:'Spin' },
+    { k:'tip', label:'Tip' }, { k:'mid', label:'Mid' },
+    { k:'butt', label:'Butt' }, { k:'balance', label:'Balance' },
+    { k:'feel', label:'Smooth' }, { k:'stability', label:'Stable' },
+  ];
+  function torqueGridHTML(id) {
+    const m = (typeof SHAFT_TORQUE !== 'undefined') && SHAFT_TORQUE[id];
+    if (!m) return '';
+    const weights = Object.keys(m).sort((a, b) => a - b);
+    const flexes = [];
+    weights.forEach(w => Object.keys(m[w]).forEach(f => { if (!flexes.includes(f)) flexes.push(f); }));
+    const head = '<th></th>' + flexes.map(f => `<th>${f}</th>`).join('');
+    const rows = weights.map(w =>
+      `<tr><th>${w}g</th>` + flexes.map(f => `<td>${m[w][f] != null ? m[w][f].toFixed(1) : '·'}</td>`).join('') + '</tr>'
+    ).join('');
+    return `<table class="ss-torque"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table>`;
+  }
+  function specSheetHTML(s) {
+    const sp = specOf(s.id), img = imgOf(s.id), c = colorOf(s.id);
+    const wRange = s.weights.length > 1 ? `${s.weights[0]}–${s.weights[s.weights.length - 1]}g` : `${s.weights[0]}g`;
+    const swatch = `<div class="ss-swatch" style="background:linear-gradient(150deg,${c},${shade(c,-34)})"><span>${s.model}</span></div>`;
+    const visual = img
+      ? `<img class="ss-img" src="${img}" alt="${s.model}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` +
+        `<div class="ss-swatch" style="display:none;background:linear-gradient(150deg,${c},${shade(c,-34)})"><span>${s.model}</span></div>`
+      : swatch;
+    let data;
+    if (sp) {
+      const f = [['Length',sp.length],['Weight',sp.weight],['Torque',sp.torque],['Tip OD',sp.tip],['Butt OD',sp.butt],['Launch',sp.launch],['Spin',sp.spin]];
+      data = `<div class="ss-badge">${CHECK} Verified specs</div><table class="ss-specs">` +
+        f.filter(x => x[1] && x[1] !== '—').map(x => `<tr><th>${x[0]}</th><td>${x[1]}</td></tr>`).join('') +
+        `</table>` + (sp.note ? `<p class="ss-note">${sp.note}</p>` : '');
+    } else {
+      data = `<div class="ss-badge est">Relative profile · est.</div><table class="ss-specs">` +
+        `<tr><th>Torque</th><td>~${s.torque.toFixed(1)}°</td></tr>` +
+        `<tr><th>Weights</th><td>${wRange}</td></tr>` +
+        `<tr><th>Flexes</th><td>${s.flexes.join(' · ')}</td></tr>` +
+        `<tr><th>Launch</th><td>${word(s.launch)}</td></tr>` +
+        `<tr><th>Spin</th><td>${word(s.spin)}</td></tr></table>`;
+    }
+    const bars = SS_AXES.map(a =>
+      `<div class="ss-pbar"><span class="ss-pl">${a.label}</span><div class="ss-pt"><span style="width:${s[a.k]/5*100}%"></span></div><span class="ss-pv">${s[a.k]}</span></div>`
+    ).join('');
+    const grid = torqueGridHTML(s.id);
+    return `
+      <span class="eyebrow">${s.mfr}${s.gen ? ' · ' + s.gen : ''}</span>
+      <h3 class="modal-title">${s.model}</h3>
+      <p class="modal-lede">${s.year} · ${wRange} · ${s.flexes.join('/')} · $${s.price}</p>
+      <div class="ss-cols">
+        <div class="ss-vis">${visual}<div class="ss-tags">${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div></div>
+        <div class="ss-data">${data}</div>
+      </div>
+      <div class="ss-section"><span class="micro">Profile · 1–5</span><div class="ss-bars">${bars}</div></div>
+      ${grid ? `<div class="ss-section"><span class="micro">Torque · weight × flex (°)</span>${grid}</div>` : ''}
+      <p class="p-blurb ss-blurb">${s.blurb}</p>
+      <p class="ss-bestfor"><b>Best for</b> ${s.bestFor}</p>`;
+  }
+  function specEsc(e) { if (e.key === 'Escape') closeSpecSheet(); }
+  function openSpecSheet(id) {
+    const s = SHAFTS.find(x => x.id === id); if (!s) return;
+    $('#spec-modal-body').innerHTML = specSheetHTML(s);
+    $('#spec-modal').hidden = false;
+    $('#spec-modal .modal').scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', specEsc);
+  }
+  function closeSpecSheet() {
+    $('#spec-modal').hidden = true;
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', specEsc);
+  }
+  $('#spec-modal-close').addEventListener('click', closeSpecSheet);
+  $('#spec-modal').addEventListener('click', e => { if (e.target === $('#spec-modal')) closeSpecSheet(); });
+  $('#p-spec').addEventListener('click', () => { if (state.selected) openSpecSheet(state.selected.id); });
+
+  /* ====================================================================
      LIBRARY / VAULT
      ==================================================================== */
   let libFilter = 'All';
@@ -563,7 +652,7 @@
     const list = SHAFTS.filter(s => libFilter === 'All' || s.mfr === libFilter);
     $('#lib-grid').innerHTML = list.map((s, i) => `
       <article class="lib-card" data-id="${s.id}" style="animation:rise .4s ${i * 25}ms both">
-        <div class="lc-mfr-row"><span class="lc-mfr">${s.mfr}</span>${photoBtn(s)}</div>
+        <div class="lc-mfr-row"><span class="lc-mfr">${s.mfr}</span>${photoBtn(s)}${specBtn(s)}</div>
         <div class="lc-name">${s.model}</div>
         <div class="lc-tags">${s.tags.join('  ·  ')}</div>
         <div class="lc-mini">${miniBars(s)}</div>
@@ -575,6 +664,7 @@
     $$('#lib-grid .lib-card').forEach(card => {
       const s = SHAFTS.find(x => x.id === card.dataset.id);
       bindCardPhoto(card, s.id);
+      bindCardSpec(card);
       card.addEventListener('click', () => loadShaft(s));
     });
   }
