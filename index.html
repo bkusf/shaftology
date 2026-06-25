@@ -161,6 +161,45 @@
   <main>
     <!-- ===================== FITTING BENCH ===================== -->
     <section class="bench" id="bench">
+      <!-- CAD-render driver head behind the fitting bench -->
+      <svg class="club-cad" viewBox="0 -40 460 410" aria-hidden="true">
+        <defs>
+          <linearGradient id="clubShade" x1="0.12" y1="0.05" x2="0.86" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+            <stop offset="0.45" stop-color="#9aa0a6" stop-opacity="0.05"/>
+            <stop offset="1" stop-color="#070a0c" stop-opacity="0.18"/>
+          </linearGradient>
+          <radialGradient id="clubGloss" cx="0.34" cy="0.24" r="0.45">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.30"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="clubShadow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#000000" stop-opacity="0.20"/>
+            <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+          </radialGradient>
+          <clipPath id="clubClip"><path d="M72,252 C60,232 62,206 80,190 C100,172 130,160 170,158 C230,146 340,138 392,196 C420,236 414,278 372,298 C300,324 170,326 116,304 C88,294 78,272 72,252 Z"/></clipPath>
+        </defs>
+        <ellipse cx="238" cy="330" rx="156" ry="15" fill="url(#clubShadow)"/>
+        <path d="M72,252 C60,232 62,206 80,190 C100,172 130,160 170,158 C230,146 340,138 392,196 C420,236 414,278 372,298 C300,324 170,326 116,304 C88,294 78,272 72,252 Z" fill="url(#clubShade)"/>
+        <path d="M72,252 C60,232 62,206 80,190 C100,172 130,160 170,158 C230,146 340,138 392,196 C420,236 414,278 372,298 C300,324 170,326 116,304 C88,294 78,272 72,252 Z" fill="url(#clubGloss)"/>
+        <g class="club-line thin" clip-path="url(#clubClip)">
+          <path d="M78,196 C200,176 330,178 392,212"/>
+          <path d="M92,230 C210,216 330,218 382,248"/>
+          <path d="M110,172 C230,158 330,154 380,196"/>
+          <path d="M152,158 C144,206 152,272 170,316"/>
+          <path d="M232,148 C222,200 224,272 252,322"/>
+          <path d="M312,150 C306,206 314,278 316,318"/>
+        </g>
+        <path class="club-line" d="M72,252 C60,232 62,206 80,190 C100,172 130,160 170,158 C230,146 340,138 392,196 C420,236 414,278 372,298 C300,324 170,326 116,304 C88,294 78,272 72,252 Z"/>
+        <path class="club-line thin" d="M80,190 C76,212 76,236 82,256"/>
+        <path class="club-line thin" d="M124,302 C220,320 320,318 366,292"/>
+        <ellipse class="club-line thin" cx="330" cy="300" rx="14" ry="6"/>
+        <path class="club-line" d="M158,160 C152,126 146,92 142,56"/>
+        <path class="club-line" d="M172,162 C168,128 162,96 156,60"/>
+        <path class="club-line" d="M142,56 C146,48 152,46 156,60"/>
+        <path class="club-line thin" d="M144,54 C128,22 108,-8 86,-34"/>
+        <path class="club-line thin" d="M156,56 C142,26 124,-2 104,-30"/>
+      </svg>
       <div class="bench-head">
         <span class="eyebrow">01 — The Fitting Bench</span>
         <h2>Dial in your <em>current gamer</em></h2>

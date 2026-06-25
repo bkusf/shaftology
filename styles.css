@@ -45,6 +45,8 @@
   --topo-opacity: 0.85;
   --bp-grid:       rgba(216,255,62,0.06);
   --bp-grid-major: rgba(216,255,62,0.11);
+  --club-line:     rgba(228,233,238,0.5);
+  --club-opacity:  0.9;
 }
 
 /* ============================ LIGHT THEME ============================ */
@@ -87,6 +89,8 @@
   --topo-opacity: 0.92;
   --bp-grid:       rgba(70,120,0,0.06);
   --bp-grid-major: rgba(70,120,0,0.10);
+  --club-line:     rgba(34,44,40,0.42);
+  --club-opacity:  0.85;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -201,7 +205,17 @@ h2 em { font-style: italic; color: var(--lime); font-weight: 500; }
 main { max-width: 1180px; margin: 0 auto; padding: 0 1.6rem; }
 
 /* ===================== FITTING BENCH ===================== */
-.bench { padding: clamp(3rem, 7vw, 5.5rem) 0 2.2rem; }
+.bench { padding: clamp(3rem, 7vw, 5.5rem) 0 2.2rem; position: relative; z-index: 1; }
+.bench-head, .console { position: relative; z-index: 1; }
+/* CAD driver-head graphic behind the fitting bench */
+.club-cad {
+  position: absolute; z-index: 0; pointer-events: none;
+  right: -10px; top: 6px; width: 470px; height: auto; opacity: var(--club-opacity);
+}
+.club-line { fill: none; stroke: var(--club-line); stroke-width: 1.3;
+  stroke-linecap: round; stroke-linejoin: round; }
+.club-line.thin { stroke-width: 0.85; opacity: 0.6; }
+@media (max-width: 900px) { .club-cad { display: none; } }
 .bench-head { animation: rise 0.7s cubic-bezier(.2,.7,.2,1) both; }
 .bench-head em { font-style: italic; }
 
