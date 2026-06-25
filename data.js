@@ -600,4 +600,20 @@ const SHAFT_TORQUE = {
   /* Accra — truetemper.com (torque uniform by flex) */
   'accra-tour-z-red':   { 60:{M3:3.5,M4:3.5,M5:3.5}, 70:{M3:3.5,M4:3.5,M5:3.5}, 80:{M3:3.5,M4:3.5,M5:3.5} },
   'accra-tour-z-green': { 60:{M3:3.0,M4:3.0,M5:2.8}, 70:{M3:3.0,M4:3.0,M5:2.8}, 80:{M3:3.0,M4:3.0,M5:2.8} },
+  'accra-shogun-red':   { 60:{M4:3.1,M5:3.0}, 70:{M4:3.1,M5:3.0}, 80:{M4:3.1,M5:3.0} },
+  'accra-shogun-green': { 60:{M3:4.0,M4:4.0,M5:3.5}, 70:{M3:4.0,M4:4.0,M5:3.5}, 80:{M3:4.0,M4:4.0,M5:3.5} },
+  'accra-shogun-blue':  { 40:{M0:4.0,M2:3.9,M4:3.8}, 50:{M0:4.0,M2:3.9,M4:3.8} },
+
+  /* UST Mamiya — ustmamiya.com */
+  'ust-linq-pc-white':  { 60:{R:3.7,S:3.6,X:3.6}, 70:{R:3.0,S:3.0,X:3.0}, 80:{S:2.9,X:2.9} },
+  'ust-linq-blue':      { 50:{R:4.3,S:4.2}, 60:{R:3.8,S:3.8,X:3.8}, 70:{R:3.1,S:3.1,X:3.1} },
+  'ust-linq-pc-red':    { 50:{R:3.9,S:3.9}, 60:{R:3.7,S:3.6,X:3.6}, 70:{R:3.1,S:3.1,X:3.1} },
+  'ust-helium':         { 40:{A:6.2,R:6.2}, 50:{A:6.0,R:6.0,S:6.0} },
+  'ust-proforce-v2':    { 60:{R:3.0,S:3.0,X:2.9}, 70:{S:2.2,X:2.2}, 80:{S:1.8,X:1.8} },
+
+  /* Aldila — aldila.com */
+  'aldila-rogue-inf':        { 50:{TR:4.6,TS:4.5,TX:4.4}, 60:{TS:3.9,TX:3.9}, 70:{TS:3.2,TX:3.1}, 80:{TX:3.1} },
+  'aldila-rogue-silver':     { 60:{R:3.5,S:3.5,X:3.4}, 70:{S:3.2,X:2.9} },
+  'aldila-quaranta-gold':    { 40:{R2:5.6,R:5.5,S:5.1}, 50:{R2:5.4,R:5.2,S:5.1} },
+  'aldila-quaranta-sapphire':{ 40:{A:5.1,R:5.1,S:5.0}, 50:{R:4.7,SR:4.7,S:4.6} },
 };
