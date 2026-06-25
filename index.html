@@ -21,61 +21,91 @@
 <body>
   <!-- golf-course topographic map backdrop -->
   <svg class="topo" viewBox="0 0 1440 1024" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <defs>
-      <path id="blobA" d="M0,-150 C82,-150 150,-92 145,-8 C152,78 78,150 -2,143 C-86,150 -150,72 -143,-10 C-150,-90 -82,-150 0,-150 Z"/>
-      <path id="blobB" d="M0,-145 C70,-158 158,-95 140,-12 C150,70 60,158 -8,140 C-90,150 -158,55 -140,-18 C-152,-92 -70,-132 0,-145 Z"/>
-      <path id="blobC" d="M0,-90 C120,-100 230,-55 225,-5 C235,55 120,95 0,88 C-130,98 -230,52 -222,-2 C-232,-58 -120,-80 0,-90 Z"/>
-    </defs>
-    <!-- fairway ribbon: tee → green -->
-    <path class="topo-fairway" d="M230,985 C430,865 470,712 720,672 C900,645 1010,628 1086,600"/>
-    <!-- contour hills -->
+    <!-- gentle terrain elevation contours (survey underlay) -->
+    <g class="topo-line faint">
+      <path d="M-60,300 C300,258 700,360 1080,300 C1280,270 1460,302 1520,292"/>
+      <path d="M-60,470 C320,430 620,520 1010,470 C1260,438 1460,470 1520,462"/>
+      <path d="M-60,650 C300,612 720,700 1120,640 C1340,608 1480,640 1520,632"/>
+      <path d="M-60,820 C320,786 680,860 1080,808 C1320,778 1480,808 1520,800"/>
+    </g>
+    <!-- fairways (mown corridors): tee → green -->
+    <g>
+      <path class="topo-fairway" d="M168,928 C150,770 205,560 236,372"/>
+      <path class="topo-fairway" d="M440,312 C560,288 660,250 770,232 C815,224 845,218 862,214"/>
+      <path class="topo-fairway" d="M1150,278 C1176,400 1182,520 1182,628"/>
+      <path class="topo-fairway" d="M524,700 C600,790 672,860 788,918"/>
+    </g>
+    <!-- water hazard -->
+    <path class="topo-water" d="M626,498 C622,470 678,452 720,468 C772,456 812,486 802,522 C818,558 770,592 718,580 C664,602 610,564 626,508 Z"/>
     <g class="topo-line">
-      <use href="#blobA" transform="translate(150 200) scale(1)"/>
-      <use href="#blobA" transform="translate(150 200) scale(0.78)"/>
-      <use href="#blobA" transform="translate(150 200) scale(0.58)"/>
-      <use href="#blobA" transform="translate(150 200) scale(0.4)"/>
-      <use href="#blobA" transform="translate(150 200) scale(0.24)"/>
-      <use href="#blobB" transform="translate(1300 150) scale(1)"/>
-      <use href="#blobB" transform="translate(1300 150) scale(0.8)"/>
-      <use href="#blobB" transform="translate(1300 150) scale(0.6)"/>
-      <use href="#blobB" transform="translate(1300 150) scale(0.42)"/>
-      <use href="#blobB" transform="translate(1300 150) scale(0.26)"/>
-      <use href="#blobA" transform="translate(540 470) scale(1.18)"/>
-      <use href="#blobA" transform="translate(540 470) scale(0.95)"/>
-      <use href="#blobA" transform="translate(540 470) scale(0.74)"/>
-      <use href="#blobA" transform="translate(540 470) scale(0.54)"/>
-      <use href="#blobA" transform="translate(540 470) scale(0.34)"/>
-      <use href="#blobC" transform="translate(330 885) scale(1.05)"/>
-      <use href="#blobC" transform="translate(330 885) scale(0.78)"/>
-      <use href="#blobC" transform="translate(330 885) scale(0.52)"/>
-      <use href="#blobC" transform="translate(330 885) scale(0.3)"/>
-      <use href="#blobB" transform="translate(1240 880) scale(1.1)"/>
-      <use href="#blobB" transform="translate(1240 880) scale(0.85)"/>
-      <use href="#blobB" transform="translate(1240 880) scale(0.62)"/>
-      <use href="#blobB" transform="translate(1240 880) scale(0.4)"/>
-      <use href="#blobC" transform="translate(1090 300) scale(0.92)"/>
-      <use href="#blobC" transform="translate(1090 300) scale(0.68)"/>
-      <use href="#blobC" transform="translate(1090 300) scale(0.46)"/>
-      <use href="#blobC" transform="translate(1090 300) scale(0.26)"/>
+      <path d="M626,498 C622,470 678,452 720,468 C772,456 812,486 802,522 C818,558 770,592 718,580 C664,602 610,564 626,508 Z" fill="none"/>
+      <path d="M662,512 C692,503 740,508 770,522" fill="none" opacity="0.6"/>
+      <path d="M656,542 C690,532 742,538 772,550" fill="none" opacity="0.6"/>
     </g>
     <!-- bunkers -->
-    <path class="topo-bunker" d="M540,735 C540,715 568,710 586,719 C604,712 624,726 617,744 C624,760 600,772 582,763 C562,772 540,756 540,735 Z"/>
-    <path class="topo-bunker" d="M1168,648 C1168,632 1190,628 1205,635 C1221,629 1238,641 1232,657 C1238,671 1216,681 1200,673 C1182,681 1166,666 1168,648 Z"/>
-    <!-- green + flag -->
-    <ellipse class="topo-line" cx="1086" cy="600" rx="118" ry="92"/>
-    <ellipse class="topo-green" cx="1086" cy="600" rx="92" ry="70"/>
-    <circle class="topo-hole" cx="1095" cy="600" r="3.6"/>
-    <path class="topo-pole" d="M1095,600 L1095,503"/>
-    <path class="topo-flag" d="M1095,506 L1132,517 L1095,528 Z"/>
-    <!-- tee box + ball -->
-    <rect class="topo-tee" x="212" y="978" width="36" height="20" rx="4"/>
-    <circle class="topo-ball" cx="230" cy="966" r="6"/>
-    <!-- shot trajectory -->
-    <path class="topo-shot" d="M232,964 Q650,330 1090,592"/>
-    <!-- yardage + hole number -->
-    <text class="topo-num" x="520" y="700">250</text>
-    <text class="topo-num" x="980" y="612">150</text>
-    <text class="topo-num big" x="1048" y="430">9</text>
+    <g class="topo-bunker">
+      <path d="M168,388 C168,372 190,368 204,375 C220,369 236,381 230,397 C236,411 214,421 198,413 C180,421 166,406 168,388 Z"/>
+      <path d="M905,238 C905,224 925,220 938,226 C952,221 966,231 961,245 C966,257 947,266 932,259 C916,266 903,253 905,238 Z"/>
+      <path d="M1228,636 C1228,622 1248,618 1261,624 C1275,619 1289,629 1284,643 C1289,655 1270,664 1255,657 C1239,664 1226,651 1228,636 Z"/>
+      <path d="M748,902 C748,888 768,884 781,890 C795,885 809,895 804,909 C809,921 790,930 775,923 C759,930 746,917 748,902 Z"/>
+      <path d="M640,282 C640,268 662,264 676,271 C690,265 706,277 700,293 C706,305 686,314 670,307 C652,314 638,300 640,282 Z"/>
+      <path d="M300,640 C300,628 318,625 330,631 C342,626 356,635 351,648 C356,659 339,667 326,660 C311,667 298,655 300,640 Z"/>
+    </g>
+    <!-- tee boxes -->
+    <g class="topo-tee">
+      <rect x="156" y="922" width="30" height="16" rx="3"/>
+      <rect x="428" y="298" width="28" height="15" rx="3"/>
+      <rect x="1136" y="258" width="28" height="15" rx="3"/>
+      <rect x="510" y="688" width="28" height="15" rx="3"/>
+    </g>
+    <!-- greens with putting-surface contour lines + pin position -->
+    <g transform="translate(240 348)">
+      <ellipse class="topo-green" cx="0" cy="0" rx="60" ry="46"/>
+      <g class="topo-line">
+        <ellipse cx="0" cy="0" rx="60" ry="46"/>
+        <ellipse cx="4" cy="-5" rx="45" ry="34"/>
+        <ellipse cx="8" cy="-9" rx="30" ry="22"/>
+        <ellipse cx="12" cy="-13" rx="16" ry="11"/>
+      </g>
+      <circle class="topo-hole" cx="14" cy="-15" r="3"/>
+    </g>
+    <g transform="translate(868 206)">
+      <ellipse class="topo-green" cx="0" cy="0" rx="56" ry="44"/>
+      <g class="topo-line">
+        <ellipse cx="0" cy="0" rx="56" ry="44"/>
+        <ellipse cx="-5" cy="4" rx="42" ry="32"/>
+        <ellipse cx="-9" cy="8" rx="27" ry="20"/>
+        <ellipse cx="-12" cy="11" rx="13" ry="9"/>
+      </g>
+      <circle class="topo-hole" cx="-13" cy="13" r="3"/>
+    </g>
+    <g transform="translate(1182 648)">
+      <ellipse class="topo-green" cx="0" cy="0" rx="58" ry="46"/>
+      <g class="topo-line">
+        <ellipse cx="0" cy="0" rx="58" ry="46"/>
+        <ellipse cx="6" cy="2" rx="43" ry="34"/>
+        <ellipse cx="11" cy="4" rx="28" ry="22"/>
+        <ellipse cx="15" cy="6" rx="14" ry="11"/>
+      </g>
+      <circle class="topo-hole" cx="17" cy="7" r="3"/>
+    </g>
+    <g transform="translate(806 930)">
+      <ellipse class="topo-green" cx="0" cy="0" rx="56" ry="44"/>
+      <g class="topo-line">
+        <ellipse cx="0" cy="0" rx="56" ry="44"/>
+        <ellipse cx="-2" cy="-6" rx="42" ry="32"/>
+        <ellipse cx="-3" cy="-11" rx="27" ry="20"/>
+        <ellipse cx="-4" cy="-15" rx="13" ry="9"/>
+      </g>
+      <circle class="topo-hole" cx="-4" cy="-17" r="3"/>
+    </g>
+    <!-- yardages -->
+    <g class="topo-num">
+      <text x="118" y="900">412</text>
+      <text x="394" y="290">358</text>
+      <text x="1098" y="250">171</text>
+      <text x="474" y="680">486</text>
+    </g>
   </svg>
 
   <div class="grain" aria-hidden="true"></div>

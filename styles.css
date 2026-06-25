@@ -38,14 +38,14 @@
   --pop-bg:     linear-gradient(180deg, #1b2220, #0e1311);
 
   /* golf-course topo background */
-  --topo-line:   rgba(216,255,62,0.07);
-  --topo-fairway:rgba(216,255,62,0.028);
-  --topo-green:  rgba(216,255,62,0.06);
-  --topo-sand:   rgba(230,164,77,0.06);
-  --topo-hole:   rgba(255,255,255,0.4);
-  --topo-ball:   rgba(255,255,255,0.5);
-  --topo-num:    rgba(216,255,62,0.11);
-  --topo-opacity: 0.72;
+  --topo-line:   rgba(216,255,62,0.10);
+  --topo-fairway:rgba(216,255,62,0.035);
+  --topo-green:  rgba(216,255,62,0.075);
+  --topo-sand:   rgba(230,164,77,0.07);
+  --topo-water:  rgba(90,165,210,0.07);
+  --topo-hole:   rgba(255,255,255,0.45);
+  --topo-num:    rgba(216,255,62,0.12);
+  --topo-opacity: 0.82;
 }
 
 /* ============================ LIGHT THEME ============================ */
@@ -78,14 +78,14 @@
   --grain-opacity: 0.2;
   --pop-bg:     linear-gradient(180deg, #ffffff, #eef1e6);
 
-  --topo-line:   rgba(70,120,0,0.09);
-  --topo-fairway:rgba(70,120,0,0.04);
-  --topo-green:  rgba(70,120,0,0.08);
-  --topo-sand:   rgba(169,106,31,0.10);
-  --topo-hole:   rgba(20,30,10,0.4);
-  --topo-ball:   rgba(255,255,255,0.9);
-  --topo-num:    rgba(70,120,0,0.14);
-  --topo-opacity: 0.9;
+  --topo-line:   rgba(70,120,0,0.11);
+  --topo-fairway:rgba(70,120,0,0.045);
+  --topo-green:  rgba(70,120,0,0.085);
+  --topo-sand:   rgba(169,106,31,0.11);
+  --topo-water:  rgba(40,110,170,0.11);
+  --topo-hole:   rgba(20,30,10,0.42);
+  --topo-num:    rgba(70,120,0,0.15);
+  --topo-opacity: 0.92;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -120,18 +120,14 @@ body {
   pointer-events: none; opacity: var(--topo-opacity);
 }
 .topo-line    { fill: none; stroke: var(--topo-line); stroke-width: 1.1; }
-.topo-fairway { fill: none; stroke: var(--topo-fairway); stroke-width: 78; stroke-linecap: round; }
+.topo-line.faint { opacity: 0.55; }
+.topo-fairway { fill: none; stroke: var(--topo-fairway); stroke-width: 64; stroke-linecap: round; }
 .topo-green   { fill: var(--topo-green); stroke: none; }
 .topo-tee     { fill: var(--topo-green); stroke: none; }
 .topo-bunker  { fill: var(--topo-sand); stroke: none; }
-.topo-pole    { stroke: var(--ink-dim); stroke-width: 1.4; }
-.topo-flag    { fill: var(--lime); stroke: none; }
+.topo-water   { fill: var(--topo-water); stroke: none; }
 .topo-hole    { fill: var(--topo-hole); stroke: none; }
-.topo-ball    { fill: var(--topo-ball); stroke: var(--topo-line); stroke-width: 0.8; }
-.topo-shot    { fill: none; stroke: var(--lime); stroke-width: 1.4; stroke-dasharray: 0.5 7;
-                stroke-linecap: round; opacity: 0.55; }
 .topo-num     { fill: var(--topo-num); font-family: var(--mono); font-size: 15px; letter-spacing: 0.12em; }
-.topo-num.big { font-size: 60px; opacity: 0.55; }
 
 main, .site-head, .site-foot { position: relative; z-index: 1; }
 
