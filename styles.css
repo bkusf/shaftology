@@ -34,8 +34,18 @@
   --head-bg:    linear-gradient(180deg, rgba(12,17,16,0.9), rgba(10,13,12,0.55));
   --body-glow:  radial-gradient(1200px 700px at 78% -8%, rgba(216,255,62,0.07), transparent 60%),
                 radial-gradient(900px 600px at -5% 12%, rgba(230,164,77,0.05), transparent 55%);
-  --grain-opacity: 0.5;
+  --grain-opacity: 0.38;
   --pop-bg:     linear-gradient(180deg, #1b2220, #0e1311);
+
+  /* golf-course topo background */
+  --topo-line:   rgba(216,255,62,0.07);
+  --topo-fairway:rgba(216,255,62,0.028);
+  --topo-green:  rgba(216,255,62,0.06);
+  --topo-sand:   rgba(230,164,77,0.06);
+  --topo-hole:   rgba(255,255,255,0.4);
+  --topo-ball:   rgba(255,255,255,0.5);
+  --topo-num:    rgba(216,255,62,0.11);
+  --topo-opacity: 0.72;
 }
 
 /* ============================ LIGHT THEME ============================ */
@@ -65,8 +75,17 @@
   --head-bg:    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(241,243,234,0.6));
   --body-glow:  radial-gradient(1200px 700px at 78% -8%, rgba(95,138,0,0.08), transparent 60%),
                 radial-gradient(900px 600px at -5% 12%, rgba(169,106,31,0.06), transparent 55%);
-  --grain-opacity: 0.28;
+  --grain-opacity: 0.2;
   --pop-bg:     linear-gradient(180deg, #ffffff, #eef1e6);
+
+  --topo-line:   rgba(70,120,0,0.09);
+  --topo-fairway:rgba(70,120,0,0.04);
+  --topo-green:  rgba(70,120,0,0.08);
+  --topo-sand:   rgba(169,106,31,0.10);
+  --topo-hole:   rgba(20,30,10,0.4);
+  --topo-ball:   rgba(255,255,255,0.9);
+  --topo-num:    rgba(70,120,0,0.14);
+  --topo-opacity: 0.9;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -94,6 +113,25 @@ body {
     repeating-linear-gradient(-45deg, rgba(0,0,0,0.22) 0 1px, transparent 1px 4px);
   mix-blend-mode: overlay;
 }
+
+/* ---- golf-course topographic map background ---- */
+.topo {
+  position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0;
+  pointer-events: none; opacity: var(--topo-opacity);
+}
+.topo-line    { fill: none; stroke: var(--topo-line); stroke-width: 1.1; }
+.topo-fairway { fill: none; stroke: var(--topo-fairway); stroke-width: 78; stroke-linecap: round; }
+.topo-green   { fill: var(--topo-green); stroke: none; }
+.topo-tee     { fill: var(--topo-green); stroke: none; }
+.topo-bunker  { fill: var(--topo-sand); stroke: none; }
+.topo-pole    { stroke: var(--ink-dim); stroke-width: 1.4; }
+.topo-flag    { fill: var(--lime); stroke: none; }
+.topo-hole    { fill: var(--topo-hole); stroke: none; }
+.topo-ball    { fill: var(--topo-ball); stroke: var(--topo-line); stroke-width: 0.8; }
+.topo-shot    { fill: none; stroke: var(--lime); stroke-width: 1.4; stroke-dasharray: 0.5 7;
+                stroke-linecap: round; opacity: 0.55; }
+.topo-num     { fill: var(--topo-num); font-family: var(--mono); font-size: 15px; letter-spacing: 0.12em; }
+.topo-num.big { font-size: 60px; opacity: 0.55; }
 
 main, .site-head, .site-foot { position: relative; z-index: 1; }
 
@@ -538,6 +576,10 @@ select option { background: var(--panel); color: var(--ink); }
 .site-foot { border-top: 1px solid var(--line-soft); margin-top: 2rem; padding: 2rem 1.6rem 3rem; }
 .site-foot p { max-width: 1180px; margin: 0 auto; font-family: var(--mono);
   font-size: 0.66rem; letter-spacing: 0.04em; color: var(--ink-faint); line-height: 1.7; }
+.foot-tag { font-family: var(--serif) !important; font-size: 1.15rem !important; letter-spacing: 0 !important;
+  color: var(--ink-dim) !important; margin-bottom: 0.9rem !important; display: flex; align-items: center; gap: 0.6rem; }
+.foot-tag em { font-style: italic; color: var(--lime); }
+.foot-tag svg { color: var(--lime); flex-shrink: 0; }
 
 /* ===================== ANIMATION ===================== */
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }

@@ -19,6 +19,65 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- golf-course topographic map backdrop -->
+  <svg class="topo" viewBox="0 0 1440 1024" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <path id="blobA" d="M0,-150 C82,-150 150,-92 145,-8 C152,78 78,150 -2,143 C-86,150 -150,72 -143,-10 C-150,-90 -82,-150 0,-150 Z"/>
+      <path id="blobB" d="M0,-145 C70,-158 158,-95 140,-12 C150,70 60,158 -8,140 C-90,150 -158,55 -140,-18 C-152,-92 -70,-132 0,-145 Z"/>
+      <path id="blobC" d="M0,-90 C120,-100 230,-55 225,-5 C235,55 120,95 0,88 C-130,98 -230,52 -222,-2 C-232,-58 -120,-80 0,-90 Z"/>
+    </defs>
+    <!-- fairway ribbon: tee → green -->
+    <path class="topo-fairway" d="M230,985 C430,865 470,712 720,672 C900,645 1010,628 1086,600"/>
+    <!-- contour hills -->
+    <g class="topo-line">
+      <use href="#blobA" transform="translate(150 200) scale(1)"/>
+      <use href="#blobA" transform="translate(150 200) scale(0.78)"/>
+      <use href="#blobA" transform="translate(150 200) scale(0.58)"/>
+      <use href="#blobA" transform="translate(150 200) scale(0.4)"/>
+      <use href="#blobA" transform="translate(150 200) scale(0.24)"/>
+      <use href="#blobB" transform="translate(1300 150) scale(1)"/>
+      <use href="#blobB" transform="translate(1300 150) scale(0.8)"/>
+      <use href="#blobB" transform="translate(1300 150) scale(0.6)"/>
+      <use href="#blobB" transform="translate(1300 150) scale(0.42)"/>
+      <use href="#blobB" transform="translate(1300 150) scale(0.26)"/>
+      <use href="#blobA" transform="translate(540 470) scale(1.18)"/>
+      <use href="#blobA" transform="translate(540 470) scale(0.95)"/>
+      <use href="#blobA" transform="translate(540 470) scale(0.74)"/>
+      <use href="#blobA" transform="translate(540 470) scale(0.54)"/>
+      <use href="#blobA" transform="translate(540 470) scale(0.34)"/>
+      <use href="#blobC" transform="translate(330 885) scale(1.05)"/>
+      <use href="#blobC" transform="translate(330 885) scale(0.78)"/>
+      <use href="#blobC" transform="translate(330 885) scale(0.52)"/>
+      <use href="#blobC" transform="translate(330 885) scale(0.3)"/>
+      <use href="#blobB" transform="translate(1240 880) scale(1.1)"/>
+      <use href="#blobB" transform="translate(1240 880) scale(0.85)"/>
+      <use href="#blobB" transform="translate(1240 880) scale(0.62)"/>
+      <use href="#blobB" transform="translate(1240 880) scale(0.4)"/>
+      <use href="#blobC" transform="translate(1090 300) scale(0.92)"/>
+      <use href="#blobC" transform="translate(1090 300) scale(0.68)"/>
+      <use href="#blobC" transform="translate(1090 300) scale(0.46)"/>
+      <use href="#blobC" transform="translate(1090 300) scale(0.26)"/>
+    </g>
+    <!-- bunkers -->
+    <path class="topo-bunker" d="M540,735 C540,715 568,710 586,719 C604,712 624,726 617,744 C624,760 600,772 582,763 C562,772 540,756 540,735 Z"/>
+    <path class="topo-bunker" d="M1168,648 C1168,632 1190,628 1205,635 C1221,629 1238,641 1232,657 C1238,671 1216,681 1200,673 C1182,681 1166,666 1168,648 Z"/>
+    <!-- green + flag -->
+    <ellipse class="topo-line" cx="1086" cy="600" rx="118" ry="92"/>
+    <ellipse class="topo-green" cx="1086" cy="600" rx="92" ry="70"/>
+    <circle class="topo-hole" cx="1095" cy="600" r="3.6"/>
+    <path class="topo-pole" d="M1095,600 L1095,503"/>
+    <path class="topo-flag" d="M1095,506 L1132,517 L1095,528 Z"/>
+    <!-- tee box + ball -->
+    <rect class="topo-tee" x="212" y="978" width="36" height="20" rx="4"/>
+    <circle class="topo-ball" cx="230" cy="966" r="6"/>
+    <!-- shot trajectory -->
+    <path class="topo-shot" d="M232,964 Q650,330 1090,592"/>
+    <!-- yardage + hole number -->
+    <text class="topo-num" x="520" y="700">250</text>
+    <text class="topo-num" x="980" y="612">150</text>
+    <text class="topo-num big" x="1048" y="430">9</text>
+  </svg>
+
   <div class="grain" aria-hidden="true"></div>
 
   <!-- ===================== HEADER ===================== -->
@@ -26,7 +85,13 @@
     <div class="head-inner">
       <div class="brand">
         <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 32 32" width="28" height="28"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="16" cy="16" r="13"/><path d="M16 3 L16 29 M6 9 L26 23" stroke-width="1.2" opacity="0.5"/></g></svg>
+          <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="16" cy="16" r="13" stroke-width="1.2" opacity="0.32"/>
+            <path d="M12 25 L12 8" stroke-linecap="round"/>
+            <path d="M12 8 L22.5 11 L12 14 Z" fill="currentColor" stroke="none"/>
+            <path d="M7 25 H20" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+            <circle cx="12" cy="25" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
         </span>
         <div class="brand-text">
           <h1>Shaftology</h1>
@@ -193,6 +258,10 @@
   </main>
 
   <footer class="site-foot">
+    <p class="foot-tag">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 22 V3"/><path d="M7 3 L18 6.5 L7 10 Z" fill="currentColor" stroke="none"/></svg>
+      Tee it high and let it fly — <em>spec obsession encouraged.</em>
+    </p>
     <p>Shaftology — built for shaftoids. Lineups current as of the 2026 season (researched from manufacturer &amp; retailer sources, Jun 2026). Profiles are relative fitting characteristics for comparison, not OEM lab numbers. Always get fit by a pro before buying.</p>
   </footer>
 
