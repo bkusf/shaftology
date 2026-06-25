@@ -8,10 +8,9 @@
     /* set theme before paint to avoid a flash */
     (function () {
       try {
-        var t = localStorage.getItem('shaftology-theme');
-        if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        var t = localStorage.getItem('shaftology-theme') || 'light';
         document.documentElement.setAttribute('data-theme', t);
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
