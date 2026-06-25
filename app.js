@@ -104,6 +104,15 @@
     const b = card.querySelector('.card-spec');
     if (b) b.addEventListener('click', e => { e.stopPropagation(); openSpecSheet(b.dataset.spec); });
   }
+  // counterbalanced = weight biased toward the grip (high balance point)
+  const isCB = s => s.balance >= 4;
+  const cbBadge = s => isCB(s)
+    ? `<span class="cb-tag" title="Counterbalanced — weight biased toward the grip">CB</span>` : '';
+  // tag list with a leading "Counterbalanced" chip, de-duped against existing tags
+  function tagsWithCB(s) {
+    const cb = isCB(s) ? `<span class="tag cb">Counterbalanced</span>` : '';
+    return cb + s.tags.filter(t => !/counterbalanc/i.test(t)).map(t => `<span class="tag">${t}</span>`).join('');
+  }
 
   /* ====================================================================
      SIMILARITY ENGINE
@@ -225,7 +234,7 @@
     $('#p-build').textContent =
       `${state.weight}g  ·  ${state.flex} flex  ·  ${torqueLabel(s, state.weight, state.flex)} torque  ·  ${s.year}`;
     $('#p-blurb').textContent = s.blurb;
-    $('#p-tags').innerHTML = s.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    $('#p-tags').innerHTML = tagsWithCB(s);
 
     renderSpecsRow(s);
     $('#p-photo-label').textContent = imgOf(s.id) ? 'Hover for photo' : 'No photo · colour ref';
@@ -392,7 +401,7 @@
         <div class="reco-top">
           <div>
             <div class="reco-mfr-row"><span class="reco-mfr">${s.mfr}</span>${photoBtn(s)}${specBtn(s)}</div>
-            <div class="reco-name">${s.model}</div>
+            <div class="reco-name">${s.model}${cbBadge(s)}</div>
           </div>
           <div class="match-badge"><b>${score}<span style="font-size:0.7rem">%</span></b><i>match</i></div>
         </div>
@@ -485,7 +494,7 @@
       return `
       <article class="reco-card" data-id="${s.id}" style="animation-delay:${idx * 55}ms">
         <div class="reco-top">
-          <div><div class="reco-mfr-row"><span class="reco-mfr">${s.mfr}</span>${photoBtn(s)}${specBtn(s)}</div><div class="reco-name">${s.model}</div></div>
+          <div><div class="reco-mfr-row"><span class="reco-mfr">${s.mfr}</span>${photoBtn(s)}${specBtn(s)}</div><div class="reco-name">${s.model}${cbBadge(s)}</div></div>
           <div class="match-badge"><b>${score}<span style="font-size:0.7rem">%</span></b><i>fit</i></div>
         </div>
         <div class="reco-meta">${w}g · ~${s.torque.toFixed(1)}° · ${s.flexes.join('/')} · $${s.price}</div>
@@ -604,7 +613,7 @@
       <h3 class="modal-title">${s.model}</h3>
       <p class="modal-lede">${s.year} · ${wRange} · ${s.flexes.join('/')} · $${s.price}</p>
       <div class="ss-cols">
-        <div class="ss-vis">${visual}<div class="ss-tags">${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div></div>
+        <div class="ss-vis">${visual}<div class="ss-tags">${tagsWithCB(s)}</div></div>
         <div class="ss-data">${data}</div>
       </div>
       <div class="ss-section"><span class="micro">Profile · 1–5</span><div class="ss-bars">${bars}</div></div>
@@ -653,7 +662,7 @@
     $('#lib-grid').innerHTML = list.map((s, i) => `
       <article class="lib-card" data-id="${s.id}" style="animation:rise .4s ${i * 25}ms both">
         <div class="lc-mfr-row"><span class="lc-mfr">${s.mfr}</span>${photoBtn(s)}${specBtn(s)}</div>
-        <div class="lc-name">${s.model}</div>
+        <div class="lc-name">${s.model}${cbBadge(s)}</div>
         <div class="lc-tags">${s.tags.join('  ·  ')}</div>
         <div class="lc-mini">${miniBars(s)}</div>
         <div class="lc-foot">

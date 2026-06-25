@@ -285,6 +285,15 @@ select option { background: var(--panel); color: var(--ink); }
   color: var(--ink); background: var(--accent-soft);
   border: 1px solid var(--line); border-radius: 6px; padding: 0.32rem 0.6rem;
 }
+.tag.cb { color: var(--copper); background: var(--copper-soft); border-color: rgba(230,164,77,0.3); }
+/* compact "CB" badge inline after a card's model name */
+.cb-tag {
+  display: inline-flex; align-items: center; vertical-align: middle; line-height: 1;
+  font-family: var(--mono); font-size: 0.56rem; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--copper); background: var(--copper-soft); border: 1px solid rgba(230,164,77,0.3);
+  border-radius: 5px; padding: 0.14rem 0.3rem; margin-left: 0.45rem; cursor: default;
+  position: relative; top: -1px;
+}
 .profile-radar { display: flex; flex-direction: column; align-items: center; }
 #radar { width: 100%; max-width: 320px; height: auto; }
 .radar-cap {
