@@ -616,4 +616,24 @@ const SHAFT_TORQUE = {
   'aldila-rogue-silver':     { 60:{R:3.5,S:3.5,X:3.4}, 70:{S:3.2,X:2.9} },
   'aldila-quaranta-gold':    { 40:{R2:5.6,R:5.5,S:5.1}, 50:{R2:5.4,R:5.2,S:5.1} },
   'aldila-quaranta-sapphire':{ 40:{A:5.1,R:5.1,S:5.0}, 50:{R:4.7,SR:4.7,S:4.6} },
+  'aldila-nv-green':         { 50:{R:4.5,S:4.5,X:4.4}, 60:{R:3.7,S:3.6,X:3.6}, 70:{R:3.1,S:3.1,X:3.0}, 80:{S:2.8,X:2.8} },
+  'aldila-ascent-ul':        { 40:{R3:8.5,R2:8.3,R:8.2,S:8.0} },
+
+  /* Fujikura — fujikuragolf.com/shaft-specs */
+  'fuji-ventus-blue':    { 50:{R:3.7,S:3.5,X:3.3}, 60:{R:3.4,S:3.3,X:3.1,TX:3.1}, 70:{S:3.0,X:2.9,TX:2.9}, 80:{S:2.9,X:2.8} },
+  'fuji-ventus-black':   { 60:{S:3.2,X:3.0}, 70:{S:3.0,X:2.9}, 80:{X:2.8} },
+  'fuji-ventus-red':     { 50:{R:3.6,S:3.4}, 60:{R:3.4,S:3.3,X:3.2}, 70:{S:3.1,X:3.0} },
+  'fuji-ventus-white':   { 40:{R2:5.0,R:5.0,S:5.0}, 50:{R2:5.0,R:5.0,S:5.0} },
+  'fuji-ventus-tr-blue': { 50:{S:3.4,X:3.4}, 60:{S:3.1,X:2.9,TX:3.0}, 70:{S:2.9,X:2.7,TX:2.8} },
+  'fuji-ventus-tr-black':{ 60:{X:2.9}, 70:{X:2.7}, 80:{X:2.6} },
+  'fuji-speeder-nx-gold':{ 50:{R:4.5,S:4.5,X:4.5}, 60:{S:3.5,X:3.5}, 70:{S:2.8,X:2.8} },
+  'fuji-speeder-nx-violet':{ 40:{R:5.7,S:5.7}, 50:{R:4.5,S:4.5,X:4.5}, 60:{S:3.6,X:3.6} },
+
+  /* Mitsubishi — mitsubishigolf.com */
+  'mitsu-diamana-wb':   { 50:{S:4.6,X:4.6,TX:4.6}, 60:{S:3.1,X:3.1,TX:3.0}, 70:{S:3.0,X:2.9,TX:2.9}, 80:{S:2.7,X:2.7,TX:2.7} },
+  'mitsu-diamana-rb':   { 50:{R:4.9,S:4.9,X:4.9}, 60:{R:3.2,S:3.2,X:3.2}, 70:{S:2.9,X:2.9} },
+  'mitsu-diamana-bb':   { 40:{R:5.1,S:5.1,X:5.1}, 50:{R:4.9,S:4.9,X:4.9}, 60:{R:3.2,S:3.2,X:3.2}, 70:{S:2.9,X:2.9} },
+  'mitsu-tensei-1k-white':{ 60:{S:3.8,X:3.8,TX:3.8}, 70:{S:3.4,X:3.3,TX:3.2}, 80:{S:2.8,X:2.8,TX:2.7} },
+  'mitsu-tensei-1k-blue': { 50:{R:4.9,S:4.8,X:4.8}, 60:{R:4.0,S:3.9,X:3.9}, 70:{S:3.4,X:3.3} },
+  'mitsu-tensei-1k-red':  { 50:{R:4.7,S:4.5,X:4.5}, 60:{R:4.0,S:3.9,X:3.8}, 70:{S:3.0,X:3.0} },
 };
