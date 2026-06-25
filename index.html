@@ -21,91 +21,109 @@
 <body>
   <!-- golf-course topographic map backdrop -->
   <svg class="topo" viewBox="0 0 1440 1024" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <!-- gentle terrain elevation contours (survey underlay) -->
+    <defs>
+      <pattern id="gMin" width="48" height="48" patternUnits="userSpaceOnUse"><path class="bp-grid-minor" d="M48 0H0V48"/></pattern>
+      <pattern id="gMaj" width="192" height="192" patternUnits="userSpaceOnUse"><path class="bp-grid-major" d="M192 0H0V192"/></pattern>
+      <pattern id="sand" width="5.5" height="5.5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="bp-hatch-line" x1="0" y1="0" x2="0" y2="5.5"/></pattern>
+    </defs>
+    <!-- blueprint grid -->
+    <rect width="1440" height="1024" fill="url(#gMin)"/>
+    <rect width="1440" height="1024" fill="url(#gMaj)"/>
+    <!-- elevation contours -->
     <g class="topo-line faint">
       <path d="M-60,300 C300,258 700,360 1080,300 C1280,270 1460,302 1520,292"/>
-      <path d="M-60,470 C320,430 620,520 1010,470 C1260,438 1460,470 1520,462"/>
-      <path d="M-60,650 C300,612 720,700 1120,640 C1340,608 1480,640 1520,632"/>
-      <path d="M-60,820 C320,786 680,860 1080,808 C1320,778 1480,808 1520,800"/>
+      <path d="M-60,520 C320,480 620,570 1010,520 C1260,488 1460,520 1520,512"/>
+      <path d="M-60,740 C300,702 720,790 1120,730 C1340,698 1480,730 1520,722"/>
     </g>
-    <!-- fairways (mown corridors): tee → green -->
-    <g>
-      <path class="topo-fairway" d="M168,928 C150,770 205,560 236,372"/>
-      <path class="topo-fairway" d="M440,312 C560,288 660,250 770,232 C815,224 845,218 862,214"/>
-      <path class="topo-fairway" d="M1150,278 C1176,400 1182,520 1182,628"/>
-      <path class="topo-fairway" d="M524,700 C600,790 672,860 788,918"/>
-    </g>
-    <!-- water hazard -->
-    <path class="topo-water" d="M626,498 C622,470 678,452 720,468 C772,456 812,486 802,522 C818,558 770,592 718,580 C664,602 610,564 626,508 Z"/>
+    <!-- fairway corridors (outlined) -->
     <g class="topo-line">
-      <path d="M626,498 C622,470 678,452 720,468 C772,456 812,486 802,522 C818,558 770,592 718,580 C664,602 610,564 626,508 Z" fill="none"/>
-      <path d="M662,512 C692,503 740,508 770,522" fill="none" opacity="0.6"/>
-      <path d="M656,542 C690,532 742,538 772,550" fill="none" opacity="0.6"/>
+      <path d="M165,924 C147,768 188,560 202,376 L270,376 C256,560 215,768 233,924 Z"/>
+      <path d="M438,284 C558,260 658,222 772,204 C814,197 844,190 860,186 L856,242 C840,246 810,253 768,260 C662,278 562,316 442,340 Z"/>
+      <path d="M1118,280 C1144,402 1150,520 1150,624 L1214,624 C1214,520 1208,402 1182,276 Z"/>
+      <path d="M504,716 C580,802 650,872 766,930 L808,902 C692,842 620,772 548,686 Z"/>
     </g>
-    <!-- bunkers -->
-    <g class="topo-bunker">
+    <!-- fairway centerlines -->
+    <g class="bp-center">
+      <path d="M199,920 C181,764 226,560 237,378"/>
+      <path d="M440,312 C560,288 660,250 770,232 C815,224 845,218 858,214"/>
+      <path d="M1150,278 C1176,402 1182,520 1182,624"/>
+      <path d="M526,702 C602,788 674,858 788,916"/>
+    </g>
+    <!-- tee boxes -->
+    <g class="topo-line">
+      <rect x="156" y="922" width="30" height="16" rx="1"/>
+      <rect x="428" y="298" width="28" height="15" rx="1"/>
+      <rect x="1136" y="258" width="28" height="15" rx="1"/>
+      <rect x="510" y="688" width="28" height="15" rx="1"/>
+    </g>
+    <!-- bunkers (hatched sand) -->
+    <g class="bp-bunker">
       <path d="M168,388 C168,372 190,368 204,375 C220,369 236,381 230,397 C236,411 214,421 198,413 C180,421 166,406 168,388 Z"/>
       <path d="M905,238 C905,224 925,220 938,226 C952,221 966,231 961,245 C966,257 947,266 932,259 C916,266 903,253 905,238 Z"/>
       <path d="M1228,636 C1228,622 1248,618 1261,624 C1275,619 1289,629 1284,643 C1289,655 1270,664 1255,657 C1239,664 1226,651 1228,636 Z"/>
       <path d="M748,902 C748,888 768,884 781,890 C795,885 809,895 804,909 C809,921 790,930 775,923 C759,930 746,917 748,902 Z"/>
       <path d="M640,282 C640,268 662,264 676,271 C690,265 706,277 700,293 C706,305 686,314 670,307 C652,314 638,300 640,282 Z"/>
-      <path d="M300,640 C300,628 318,625 330,631 C342,626 356,635 351,648 C356,659 339,667 326,660 C311,667 298,655 300,640 Z"/>
     </g>
-    <!-- tee boxes -->
-    <g class="topo-tee">
-      <rect x="156" y="922" width="30" height="16" rx="3"/>
-      <rect x="428" y="298" width="28" height="15" rx="3"/>
-      <rect x="1136" y="258" width="28" height="15" rx="3"/>
-      <rect x="510" y="688" width="28" height="15" rx="3"/>
+    <!-- water hazard (outlined) -->
+    <g class="topo-line">
+      <path d="M626,498 C622,470 678,452 720,468 C772,456 812,486 802,522 C818,558 770,592 718,580 C664,602 610,564 626,508 Z"/>
+      <path d="M662,512 C692,503 740,508 770,522" opacity="0.6"/>
+      <path d="M656,542 C690,532 742,538 772,550" opacity="0.6"/>
     </g>
-    <!-- greens with putting-surface contour lines + pin position -->
+    <text class="bp-label small" x="676" y="528" text-anchor="middle">WATER</text>
+    <!-- greens: putting-surface contours + pin -->
     <g transform="translate(240 348)">
-      <ellipse class="topo-green" cx="0" cy="0" rx="60" ry="46"/>
-      <g class="topo-line">
-        <ellipse cx="0" cy="0" rx="60" ry="46"/>
-        <ellipse cx="4" cy="-5" rx="45" ry="34"/>
-        <ellipse cx="8" cy="-9" rx="30" ry="22"/>
-        <ellipse cx="12" cy="-13" rx="16" ry="11"/>
-      </g>
-      <circle class="topo-hole" cx="14" cy="-15" r="3"/>
+      <g class="topo-line"><ellipse cx="0" cy="0" rx="58" ry="44"/><ellipse cx="4" cy="-5" rx="44" ry="33"/><ellipse cx="8" cy="-9" rx="29" ry="21"/><ellipse cx="12" cy="-13" rx="15" ry="10"/></g>
+      <circle class="topo-hole" cx="14" cy="-15" r="2.6"/>
     </g>
     <g transform="translate(868 206)">
-      <ellipse class="topo-green" cx="0" cy="0" rx="56" ry="44"/>
-      <g class="topo-line">
-        <ellipse cx="0" cy="0" rx="56" ry="44"/>
-        <ellipse cx="-5" cy="4" rx="42" ry="32"/>
-        <ellipse cx="-9" cy="8" rx="27" ry="20"/>
-        <ellipse cx="-12" cy="11" rx="13" ry="9"/>
-      </g>
-      <circle class="topo-hole" cx="-13" cy="13" r="3"/>
+      <g class="topo-line"><ellipse cx="0" cy="0" rx="56" ry="44"/><ellipse cx="-5" cy="4" rx="42" ry="32"/><ellipse cx="-9" cy="8" rx="27" ry="20"/><ellipse cx="-12" cy="11" rx="13" ry="9"/></g>
+      <circle class="topo-hole" cx="-13" cy="13" r="2.6"/>
     </g>
     <g transform="translate(1182 648)">
-      <ellipse class="topo-green" cx="0" cy="0" rx="58" ry="46"/>
-      <g class="topo-line">
-        <ellipse cx="0" cy="0" rx="58" ry="46"/>
-        <ellipse cx="6" cy="2" rx="43" ry="34"/>
-        <ellipse cx="11" cy="4" rx="28" ry="22"/>
-        <ellipse cx="15" cy="6" rx="14" ry="11"/>
-      </g>
-      <circle class="topo-hole" cx="17" cy="7" r="3"/>
+      <g class="topo-line"><ellipse cx="0" cy="0" rx="56" ry="44"/><ellipse cx="6" cy="2" rx="42" ry="33"/><ellipse cx="11" cy="4" rx="28" ry="21"/><ellipse cx="15" cy="6" rx="14" ry="10"/></g>
+      <circle class="topo-hole" cx="17" cy="7" r="2.6"/>
     </g>
     <g transform="translate(806 930)">
-      <ellipse class="topo-green" cx="0" cy="0" rx="56" ry="44"/>
-      <g class="topo-line">
-        <ellipse cx="0" cy="0" rx="56" ry="44"/>
-        <ellipse cx="-2" cy="-6" rx="42" ry="32"/>
-        <ellipse cx="-3" cy="-11" rx="27" ry="20"/>
-        <ellipse cx="-4" cy="-15" rx="13" ry="9"/>
-      </g>
-      <circle class="topo-hole" cx="-4" cy="-17" r="3"/>
+      <g class="topo-line"><ellipse cx="0" cy="0" rx="56" ry="44"/><ellipse cx="-2" cy="-6" rx="42" ry="32"/><ellipse cx="-3" cy="-11" rx="27" ry="20"/><ellipse cx="-4" cy="-15" rx="13" ry="9"/></g>
+      <circle class="topo-hole" cx="-4" cy="-17" r="2.6"/>
     </g>
-    <!-- yardages -->
-    <g class="topo-num">
-      <text x="118" y="900">412</text>
-      <text x="394" y="290">358</text>
-      <text x="1098" y="250">171</text>
-      <text x="474" y="680">486</text>
+    <!-- hole markers + callouts -->
+    <g transform="translate(170 900)"><circle class="topo-line" r="11"/><text class="bp-num" y="4.5" text-anchor="middle">1</text></g>
+    <text class="bp-label" x="190" y="904">PAR 4 · 412 YD</text>
+    <g transform="translate(420 306)"><circle class="topo-line" r="11"/><text class="bp-num" y="4.5" text-anchor="middle">2</text></g>
+    <text class="bp-label" x="438" y="310">PAR 5 · 540 YD</text>
+    <g transform="translate(1124 280)"><circle class="topo-line" r="11"/><text class="bp-num" y="4.5" text-anchor="middle">3</text></g>
+    <text class="bp-label" x="980" y="262">PAR 3 · 171 YD</text>
+    <g transform="translate(500 690)"><circle class="topo-line" r="11"/><text class="bp-num" y="4.5" text-anchor="middle">4</text></g>
+    <text class="bp-label" x="468" y="672">PAR 4 · 486 YD</text>
+    <!-- dimension line (hole 3) -->
+    <g class="topo-line">
+      <line x1="1252" y1="290" x2="1252" y2="664"/>
+      <line x1="1246" y1="290" x2="1258" y2="290"/>
+      <line x1="1246" y1="664" x2="1258" y2="664"/>
     </g>
+    <text class="bp-label small" transform="translate(1266 506) rotate(-90)" text-anchor="middle">171 YDS</text>
+    <!-- north arrow -->
+    <g transform="translate(1384 150)">
+      <circle class="topo-line" r="20"/>
+      <path class="topo-line" d="M0,12 L0,-12 M-5,-5 L0,-14 L5,-5"/>
+      <text class="bp-num" y="-25" text-anchor="middle">N</text>
+    </g>
+    <!-- scale bar -->
+    <g transform="translate(96 992)">
+      <g class="topo-line"><line x1="0" y1="0" x2="180" y2="0"/><line x1="0" y1="-5" x2="0" y2="5"/><line x1="60" y1="-4" x2="60" y2="4"/><line x1="120" y1="-4" x2="120" y2="4"/><line x1="180" y1="-5" x2="180" y2="5"/></g>
+      <text class="bp-label small" x="-2" y="16">0</text>
+      <text class="bp-label small" x="152" y="16">150 YDS</text>
+    </g>
+    <!-- title block -->
+    <g class="topo-line" transform="translate(1164 910)">
+      <rect x="0" y="0" width="216" height="80" fill="none"/>
+      <line x1="0" y1="27" x2="216" y2="27"/><line x1="0" y1="54" x2="216" y2="54"/>
+    </g>
+    <text class="bp-label" x="1176" y="932">SHAFTOLOGY G.C.</text>
+    <text class="bp-label small" x="1176" y="957">ROUTING PLAN · FRONT 9</text>
+    <text class="bp-label small" x="1176" y="983">SCALE 1"=80YD · SHT 1/2</text>
   </svg>
 
   <div class="grain" aria-hidden="true"></div>
