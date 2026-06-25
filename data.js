@@ -497,3 +497,30 @@ const SHAFT_SPECS = {
   'accra-shogun-green': { length:'46"', weight:'54–80g', torque:'3.5–4.0°', tip:'0.335"', butt:'0.610–0.615"', launch:'Mid', spin:'Mid', note:'Flexes M3–M5' },
   'accra-shogun-blue':  { length:'46"', weight:'43–48g', torque:'3.8–4.0°', tip:'0.335"', butt:'0.610"', launch:'High', spin:'Mid', note:'Flexes M0(L)/M2(A)/M4(S)' },
 };
+
+/* ============================================================================
+   EXACT TORQUE BY WEIGHT-CLASS × FLEX (real manufacturer spec tables)
+   ----------------------------------------------------------------------------
+   torqueAt(id, weight, flex) returns the exact value for a selected build;
+   if that combo isn't in the table it falls back to the same flex at the
+   nearest weight, and finally to the shaft's representative `torque` field.
+   Keys: weight class (g) → flex code → torque (degrees).
+   ========================================================================== */
+const SHAFT_TORQUE = {
+  /* Graphite Design — full weight×flex grid (proschoicegolfshafts) */
+  'gd-ad-fi': { 40:{R2:5.3,R1:5.3,S:5.2,X:5.2}, 50:{R2:4.6,R1:4.5,S:4.5,X:4.5}, 60:{SR:3.2,S:3.2,X:3.2,TX:3.2}, 70:{S:2.9,X:2.9,TX:2.9}, 80:{X:2.6} },
+  'gd-ad-di': { 50:{R:4.7,S:4.6,X:4.6}, 60:{S:3.3,X:3.3,TX:3.3}, 70:{S:3.2,X:3.1,TX:3.1}, 80:{S:3.0,X:2.9,TX:2.9} },
+  'gd-ad-iz': { 50:{R:4.5,S:4.4,X:4.4}, 60:{S:3.2,X:3.2,TX:3.2}, 70:{S:3.1,X:3.1,TX:3.0}, 80:{S:2.9,X:2.9} },
+  'gd-ad-vr': { 40:{R2:5.7,R1:5.6,S:5.6}, 50:{R2:4.5,R1:4.5,S:4.5,X:4.5}, 60:{SR:3.2,S:3.2,X:3.2}, 70:{S:3.0,X:3.0}, 80:{S:2.6,X:2.6} },
+
+  /* Project X — by flex (truetemper.com); nearest-flex fallback covers weights */
+  'px-titan-black':      { 60:{'5.5':3.5,'6.0':3.5,'6.5':3.3,'TX':2.7} },
+  'px-titan-yellow':     { 60:{'5.5':3.5,'6.0':3.5,'6.5':3.3,'TX':2.7} },
+  'px-denali-black':     { 60:{'6.0':3.6,'6.5':3.5,'TX':2.8} },
+  'px-denali-blue':      { 50:{'6.0':4.5,'6.5':3.6,'TX':2.7} },
+  'px-denali-red':       { 40:{'5.0':5.4,'5.5':5.2,'6.0':4.9} },
+  'px-hzrdus-t1100':     { 60:{'6.0':2.4,'6.5':2.3} },
+  'px-hzrdus-black-g5':  { 60:{'5.5':3.5,'6.0':3.2,'6.5':3.0,'TX':2.7} },
+  'px-hzrdus-g5-yellow': { 60:{'5.5':3.4,'6.0':3.2,'6.5':3.0,'TX':2.9} },
+  'px-cypher-20':        { 40:{'4.0':7.1,'5.0':6.0,'5.5':5.3,'6.0':4.2} },
+};

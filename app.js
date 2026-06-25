@@ -21,6 +21,27 @@
   const colorOf = id => ((typeof SHAFT_COLORS !== 'undefined') && SHAFT_COLORS[id]) || '#7a8580';
   const specOf  = id => (typeof SHAFT_SPECS !== 'undefined') ? SHAFT_SPECS[id] : null;
 
+  // exact torque for a selected (weight, flex); falls back to same flex @ nearest
+  // weight, then null (caller shows the representative ~value)
+  function torqueAt(id, weight, flex) {
+    const m = (typeof SHAFT_TORQUE !== 'undefined') && SHAFT_TORQUE[id];
+    if (!m) return null;
+    const w = String(weight);
+    if (m[w] && m[w][flex] != null) return m[w][flex];
+    const ws = Object.keys(m).filter(k => m[k][flex] != null);
+    if (ws.length) {
+      const tw = Number(weight);
+      const near = ws.reduce((a, b) => Math.abs(+b - tw) < Math.abs(+a - tw) ? b : a);
+      return m[near][flex];
+    }
+    return null;
+  }
+  // "3.2°" when exact for the build, else "~3.2°" (representative)
+  function torqueLabel(s, weight, flex) {
+    const t = torqueAt(s.id, weight, flex);
+    return t != null ? t.toFixed(1) + '°' : '~' + s.torque.toFixed(1) + '°';
+  }
+
   function shade(hex, amt) {
     const n = parseInt(hex.slice(1), 16);
     const clamp = v => Math.max(0, Math.min(255, v));
@@ -193,7 +214,7 @@
     $('#p-mfr').textContent = s.mfr + (s.gen ? ' · ' + s.gen : '');
     $('#p-model').textContent = s.model;
     $('#p-build').textContent =
-      `${state.weight}g  ·  ${state.flex} flex  ·  ${s.torque.toFixed(1)}° torque  ·  ${s.year}`;
+      `${state.weight}g  ·  ${state.flex} flex  ·  ${torqueLabel(s, state.weight, state.flex)} torque  ·  ${s.year}`;
     $('#p-blurb').textContent = s.blurb;
     $('#p-tags').innerHTML = s.tags.map(t => `<span class="tag">${t}</span>`).join('');
 
@@ -366,7 +387,7 @@
           </div>
           <div class="match-badge"><b>${score}<span style="font-size:0.7rem">%</span></b><i>match</i></div>
         </div>
-        <div class="reco-meta">${w}g · ${s.torque.toFixed(1)}° · ${flexOk ? state.flex + ' avail' : 'no ' + state.flex} · $${s.price}</div>
+        <div class="reco-meta">${w}g · ${torqueLabel(s, w, state.flex)} · ${flexOk ? state.flex + ' avail' : 'no ' + state.flex} · $${s.price}</div>
         <div class="reco-diff">
           ${deltas.map(d => `<span class="diff-pill ${d.cls}">${d.arrow} ${d.txt}</span>`).join('')}
         </div>
@@ -457,7 +478,7 @@
           <div><div class="reco-mfr-row"><span class="reco-mfr">${s.mfr}</span>${photoBtn(s)}</div><div class="reco-name">${s.model}</div></div>
           <div class="match-badge"><b>${score}<span style="font-size:0.7rem">%</span></b><i>fit</i></div>
         </div>
-        <div class="reco-meta">${w}g · ${s.torque.toFixed(1)}° · ${s.flexes.join('/')} · $${s.price}</div>
+        <div class="reco-meta">${w}g · ~${s.torque.toFixed(1)}° · ${s.flexes.join('/')} · $${s.price}</div>
         <div class="reco-diff">
           <span class="diff-pill">${word(s.launch)} launch</span>
           <span class="diff-pill">${word(s.spin)} spin</span>
