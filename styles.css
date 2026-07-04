@@ -162,7 +162,7 @@ h2 em { font-style: italic; color: var(--lime); font-weight: 500; }
   border-bottom: 1px solid var(--line-soft);
   background: var(--head-bg);
   backdrop-filter: blur(8px);
-  position: sticky; top: 0; z-index: 50;
+  position: sticky; top: 48px; z-index: 50; /* sits below the 48px ForeFitter bar */
 }
 .head-inner {
   max-width: 1180px; margin: 0 auto; padding: 0.95rem 1.6rem;

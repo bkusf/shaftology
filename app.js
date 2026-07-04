@@ -528,17 +528,13 @@
   })();
 
   /* ====================================================================
-     THEME TOGGLE (light / dark) — palette is pure CSS via [data-theme]
+     THEME — the toggle lives in the shared ForeFitter bar (see /shared/).
+     It swaps [data-theme] + the shared 'forefitter-theme' key and fires
+     'ff-theme-change'; we just replay the spine draw in the new palette.
      ==================================================================== */
-  (function () {
-    const root = document.documentElement;
-    $('#theme-toggle').addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      root.setAttribute('data-theme', next);
-      try { localStorage.setItem('shaftology-theme', next); } catch (e) {}
-      if (state.selected) drawBend(state.selected);   // replay the spine draw in new colours
-    });
-  })();
+  window.addEventListener('ff-theme-change', () => {
+    if (state.selected) drawBend(state.selected);
+  });
 
   /* ====================================================================
      METHODOLOGY MODAL (profile-DNA info)

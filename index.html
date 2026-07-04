@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SHAFTOLOGY — Aftermarket Driver Shaft Lab</title>
   <script>
-    /* set theme before paint to avoid a flash */
+    /* set theme before paint to avoid a flash — shared across the ForeFitter suite */
     (function () {
       try {
-        var t = localStorage.getItem('shaftology-theme') || 'light';
+        var t = localStorage.getItem('forefitter-theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', t);
       } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
     })();
@@ -17,8 +18,35 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- ForeFitter global suite bar — shared across all three sites -->
+  <link rel="stylesheet" href="/shared/forefitter-bar.css" />
+  <script defer src="/shared/forefitter-bar.js"></script>
 </head>
 <body>
+  <!-- ===================== FOREFITTER GLOBAL BAR ===================== -->
+  <!-- Mirrored inline on all three sites; only `data-ff-active` differs. -->
+  <div class="ff-bar" data-ff-active="shaft">
+    <a class="ff-bar__brand" href="/" aria-label="ForeFitter home">
+      <svg class="ff-bar__mark" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
+        <circle class="ff-ring" cx="16" cy="16" r="15" />
+        <path class="ff-pole" d="M16 4 L16 22" />
+        <path class="ff-flag" d="M16 5 L25 8.5 L16 12 Z" />
+        <circle class="ff-ball" cx="16" cy="24" r="2.4" />
+      </svg>
+      <span class="ff-bar__word">Fore<b>Fitter</b></span>
+    </a>
+    <nav class="ff-bar__switch" aria-label="ForeFitter apps">
+      <a href="/" data-ff="overview">Overview</a>
+      <a href="/golf-balls" data-ff="ball">Ball Lab</a>
+      <a href="/shafts/" data-ff="shaft">Shaft Lab</a>
+    </nav>
+    <button class="ff-bar__theme" type="button" aria-label="Toggle light and dark theme" title="Toggle theme">
+      <svg class="ff-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.5" y2="12"/><line x1="4.2" y1="4.2" x2="6" y2="6"/><line x1="18" y1="18" x2="19.8" y2="19.8"/><line x1="4.2" y1="19.8" x2="6" y2="18"/><line x1="18" y1="6" x2="19.8" y2="4.2"/></svg>
+      <svg class="ff-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 10.2 4.3 6.4 6.4 0 0 0 20 14.5Z"/></svg>
+    </button>
+  </div>
+
   <!-- golf-course topographic map backdrop -->
   <svg class="topo" viewBox="0 0 1440 1024" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
@@ -150,10 +178,6 @@
         <span class="kpi"><b id="kpi-shafts">0</b><i>shafts</i></span>
         <span class="kpi"><b id="kpi-mfrs">0</b><i>makers</i></span>
         <span class="head-tag">profile&nbsp;intelligence&nbsp;engine</span>
-        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light / dark mode" title="Toggle light / dark mode">
-          <svg class="i-moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-          <svg class="i-sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8l1.8-1.8M18 6l1.8-1.8"/></svg>
-        </button>
       </div>
     </div>
   </header>
